@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Azzam Yousif — Data Portfolio</title>
+  <meta name="description" content="Data Analyst portfolio — Excel, SQL, Python, and Data Visualization projects."/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0A2647;        /* brand background */
+      --bg2:#0f1b37;       /* section background */
+      --primary:#2C74B3;   /* action color */
+      --accent:#58C4DC;    /* highlight */
+      --text:#F4F6FB;      /* main text */
+      --muted:#C7D2FE;     /* secondary text */
+      --card:#132147;      /* card */
+      --card2:#182a59;     /* card gradient */
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0; font-family:'Poppins',system-ui,sans-serif; color:var(--text); background:linear-gradient(180deg,var(--bg) 0%, #0b1732 100%)}
+    a{color:var(--accent); text-decoration:none}
+    .container{width:min(1180px,92%); margin-inline:auto}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(160%) blur(8px); background:rgba(10,20,39,.7); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700}
+    .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent)}
+    .menu{display:flex; gap:18px; flex-wrap:wrap}
+    .menu a{padding:8px 10px; border-radius:8px; color:var(--text); font-weight:600}
+    .menu a:hover{background:rgba(255,255,255,.08)}
+    .btn{padding:10px 14px; border-radius:12px; font-weight:700; border:1px solid rgba(255,255,255,.16); color:var(--text)}
+    .btn.primary{background:var(--primary); border-color:transparent}
+    .btn.primary:hover{filter:brightness(1.08)}
+
+    /* HERO */
+    .hero{display:grid; grid-template-columns:.9fr 1.1fr; gap:34px; align-items:center; padding:58px 0 30px}
+    .hero h1{font-size:clamp(28px,3.6vw,46px); line-height:1.22; margin:0}
+    .lead{color:var(--muted); margin:10px 0 18px; max-width:65ch}
+
+    /* === Avatar (border removed, brand glow added) === */
+    .avatar-wrap{
+      position:relative;
+      width:min(320px,90%);
+      margin-inline:auto;
+      isolation:isolate; /* keep glow behind image/badge only */
+    }
+    .avatar{
+      width:100%;
+      height: 350px;
+      aspect-ratio:1/1;
+      border-radius:28px;
+      object-fit:cover;
+      border:none; /* remove old frame */
+      /* subtle depth shadow only */
+      box-shadow:
+        0 18px 48px rgba(17,58,115,.45),
+        0 6px 18px rgba(44,116,179,.25);
+      position:relative;
+      z-index:1;
+    }
+    /* soft brand glow halo */
+    .avatar-wrap::before{
+      content:"";
+      position:absolute;
+      inset:-16px;
+      border-radius:32px;
+      pointer-events:none;
+      background:
+        radial-gradient(70% 85% at 50% 20%, rgba(88,196,220,.55) 0%, rgba(88,196,220,0) 60%),
+        conic-gradient(from 210deg at 50% 50%,
+          rgba(88,196,220,.28) 0%,
+          rgba(44,116,179,.22) 25%,
+          rgba(10,38,71,0) 65%,
+          rgba(88,196,220,.28) 100%);
+      filter: blur(18px) saturate(120%);
+      z-index:0;
+    }
+    .avatar-badge{
+      position:absolute; right:-10px; bottom:-10px;
+      background:var(--primary); color:#fff; padding:10px 12px;
+      border-radius:14px; border:1px solid rgba(255,255,255,.2); font-weight:700;
+      z-index:2;
+    }
+
+    .chips{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0}
+    .chip{background:rgba(88,196,220,.12); color:var(--accent); padding:6px 10px; border:1px solid rgba(88,196,220,.35); border-radius:999px; font-size:14px}
+
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px}
+    .cta-row .btn{padding:12px 16px}
+
+    /* SOCIAL BADGES */
+    .socials{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0}
+    .socials a{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); font-weight:700}
+    .socials a:hover{background:rgba(255,255,255,.1)}
+
+    /* Sections */
+    section{padding:50px 0}
+    h2{font-size:clamp(22px,2.5vw,32px); margin:0 0 12px}
+    .muted{color:var(--muted)}
+
+    /* Skills */
+    .skills{display:grid; grid-template-columns:repeat(5,1fr); gap:14px}
+    .skill{background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); padding:12px; border-radius:12px}
+    .skill small{color:var(--muted)}
+
+    /* Projects */
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 22px}
+    .pill{border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.03); padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:700}
+    .pill.active{background:var(--primary); border-color:transparent}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .card{background:linear-gradient(180deg,var(--card) 0,var(--card2) 100%); border:1px solid rgba(255,255,255,.08); border-radius:14px; overflow:hidden; display:flex; flex-direction:column}
+    .thumb{aspect-ratio:16/9; display:grid; place-items:center; background:radial-gradient(80% 80% at 50% 20%, rgba(44,116,179,.4), rgba(19,33,71,.6)); border-bottom:1px solid rgba(255,255,255,.08)}
+    .thumb svg{width:64px; opacity:.9}
+    .card .body{padding:14px}
+    .tags{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 10px}
+    .tag{font-size:12px; padding:4px 8px; border:1px solid rgba(255,255,255,.12); border-radius:8px; color:var(--muted)}
+    .actions{margin-top:auto; display:flex; gap:10px; padding:12px 14px; border-top:1px solid rgba(255,255,255,.08)}
+    .actions a{flex:1; text-align:center; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,.14)}
+    .actions a.primary{background:var(--primary); color:white; border-color:transparent}
+
+    /* Contact */
+    .contacts{display:flex; gap:10px; flex-wrap:wrap; margin:10px 0}
+    .contact-link{padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.03)}
+    form{display:grid; gap:10px; max-width:520px}
+    input, textarea{padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.03); color:var(--text)}
+    input::placeholder, textarea::placeholder{color:#9db0ff}
+
+    footer{padding:24px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,.08)}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .skills{grid-template-columns:repeat(3,1fr)}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .avatar-wrap{width:220px}
+    }
+    @media (max-width:560px){
+      .skills{grid-template-columns:repeat(2,1fr)}
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* === Custom: Distinct Social Buttons & Contact Links === */
+    .socials a{ 
+      background: linear-gradient(135deg,#FFD166 0%, #FF8C42 100%);
+      color:#0b1732; 
+      border-color:transparent; 
+      box-shadow:0 8px 18px rgba(255, 160, 64, 0.22);
+      transition:.2s transform ease, .2s filter ease;
+    }
+    .socials a i{ font-size:18px; }
+    .socials a:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+
+    /* Contact section links with a cooler cyan theme to differ from skills/cards */
+    .contacts .contact-link{
+      background: linear-gradient(135deg, rgba(88,196,220,.25) 0%, rgba(44,116,179,.35) 100%);
+      border-color: rgba(255,255,255,.08);
+      color:#E7F2FF;
+      font-weight:700;
+      display:inline-flex; align-items:center; gap:8px;
+      transition:.2s transform ease, .2s filter ease;
+    }
+    .contacts .contact-link:hover{ transform:translateY(-2px); filter:brightness(1.08); }
+    .contacts .contact-link i{ font-size:18px; }
+
+    /* Skills with icons */
+    .skill{display:flex; align-items:flex-start; gap:10px;}
+    .skill .ico{font-size:20px; opacity:.9; margin-top:2px; color:var(--accent);}
+
+    /* === Custom: Skills Section Full-Width & Center === */
+    section#skills.container{ width:min(1600px,98%); }
+    #skills h2, #skills .muted{ text-align:center; }
+    #skills .skills{
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:18px;
+      width:100%;
+    }
+    #skills .skill{
+      text-align:center;
+      justify-content:center;
+      padding:18px;
+      min-height:110px;
+    }
+    #skills .skill .ico{ font-size:24px; }
+
+    /* Ensure contact appears anchored low on short pages */
+    #contact{ padding-bottom: 70px; }
+
+    /* === Custom: Center Contact Form & Footer === */
+    #contact { text-align: center; }
+    #contact .contacts { justify-content: center; }
+    #contact form { margin-inline: auto; text-align: left; }
+    footer .container { text-align: center; }
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand"><span class="dot"></span> Azzam Yousif — Data Portfolio</div>
+    <div class="cta-row">
+      <a class="btn" href="#projects">View Work</a>
+      <a class="btn primary" href="#cv" onclick="alert('Replace this with your resume PDF link')">Download CV</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero container" id="home">
+    <div class="avatar-wrap">
+      <!-- 🔷 Put your processed portrait here (same brand identity) -->
+      <img class="avatar" src="P1.png" alt="Azzam Yousif portrait"/>
+      <span class="avatar-badge">Available</span>
+    </div>
+
+    <div>
+      <h1>Hi, I'm <span style="color:var(--accent)">Azzam Yousif</span><br/> Data Analyst — Turning Data into Decisions</h1>
+      <p class="lead">I transform raw data into clear, actionable insights using <b>Excel</b>, <b>SQL</b>, <b>Python</b>, and <b>Power BI</b>. Explore selected projects categorized by technology.</p>
+
+      <div class="chips">
+        <span class="chip">Pivot & Power Query</span>
+        <span class="chip">SQL Joins & CTEs</span>
+        <span class="chip">Pandas</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">Data Visualization</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#projects">Browse Projects</a>
+        <a class="btn" href="#contact">Contact Me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="container" id="skills">
+    <h2>Skills</h2>
+    <p class="muted">A practical mix of analysis, cleaning, modeling, and visualization.</p>
+    <div class="skills" role="list">
+      <div class="skill" role="listitem"><i class="ico fa-solid fa-file-excel"></i><div><b>Excel</b><br><small>Pivot, Power Query, Charts</small></div></div>
+      <div class="skill" role="listitem"><i class="ico fa-solid fa-database"></i><div><b>SQL</b><br><small>JOIN, GROUP BY, CTE</small></div></div>
+      <div class="skill" role="listitem"><i class="ico fa-brands fa-python"></i><div><b>Python</b><br><small>Pandas, Matplotlib</small></div></div>
+      <div class="skill" role="listitem"><i class="ico fa-solid fa-chart-column"></i><div><b>Power BI</b><br><small>Modeling, DAX</small></div></div>
+      <div class="skill" role="listitem"><i class="ico fa-solid fa-code"></i><div><b>HTML/CSS/JS</b><br><small>Web presentation</small></div></div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="container" id="projects">
+    <h2>Projects — by technology</h2>
+    <p class="muted">Use filters to view projects by stack.</p>
+
+    <div class="toolbar" role="tablist" aria-label="Project filter">
+      <button class="pill active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="pill" data-filter="excel" role="tab">Excel</button>
+      <button class="pill" data-filter="sql" role="tab">SQL</button>
+      <button class="pill" data-filter="python" role="tab">Python</button>
+      <button class="pill" data-filter="viz" role="tab">Visualization</button>
+    </div>
+
+    <div class="grid" id="projects-grid">
+      <!-- Excel -->
+      <article class="card" data-category="excel">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="2"></rect><path d="M7 7h6M7 11h10M7 15h10"></path></svg></div>
+        <div class="body">
+          <h3>Monthly Sales Analysis — Excel</h3>
+          <div class="tags"><span class="tag">Power Query</span><span class="tag">Pivot</span><span class="tag">Charts</span></div>
+          <p class="muted">Cleaned dates, unified categories, and built KPI view for monthly profitability and top products.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Case Study</a>
+          <a href="#">Sample Files</a>
+        </div>
+      </article>
+
+      <article class="card" data-category="excel">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v12H4z"></path><path d="M4 16l4 4h12"></path></svg></div>
+        <div class="body">
+          <h3>Inventory Control Dashboard — Excel</h3>
+          <div class="tags"><span class="tag">Lookup</span><span class="tag">Conditional Formatting</span></div>
+          <p class="muted">Rapid overview to spot low-stock SKUs and trigger reorder thresholds.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Preview</a>
+          <a href="#">XLSX Template</a>
+        </div>
+      </article>
+
+      <!-- SQL -->
+      <article class="card" data-category="sql">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v7c0 1.7 4 3 9 3s9-1.3 9-3V5"></path><path d="M3 12v7c0 1.7 4 3 9 3s9-1.3 9-3v-7"></path></svg></div>
+        <div class="body">
+          <h3>Customer Behavior Segmentation — SQL</h3>
+          <div class="tags"><span class="tag">CTE</span><span class="tag">Window</span><span class="tag">JOIN</span></div>
+          <p class="muted">RFM-style segmentation feeding a Power BI dashboard for retention actions.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">SQL File</a>
+          <a href="#">Summary Report</a>
+        </div>
+      </article>
+
+      <article class="card" data-category="sql">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+        <div class="body">
+          <h3>Daily Orders View — SQL</h3>
+          <div class="tags"><span class="tag">Aggregation</span><span class="tag">Views</span></div>
+          <p class="muted">Materialized view to power daily channel-level sales cards.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Code</a>
+          <a href="#">Dashboard Snapshot</a>
+        </div>
+      </article>
+
+      <!-- Python -->
+      <article class="card" data-category="python">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 4h8v6H8z"></path><path d="M4 14h16v6H4z"></path></svg></div>
+        <div class="body">
+          <h3>Sales Data Cleaning — Python</h3>
+          <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span></div>
+          <p class="muted">Advanced wrangling, missing-values handling, and category normalization prior to BI visuals.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Notebook</a>
+          <a href="#">Dataset</a>
+        </div>
+      </article>
+
+      <article class="card" data-category="python">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="3"></circle><circle cx="17" cy="17" r="3"></circle><path d="M10 7h4M7 10v4M14 17H9"></path></svg></div>
+        <div class="body">
+          <h3>Sales Forecast — Python</h3>
+          <div class="tags"><span class="tag">Time Series</span><span class="tag">ARIMA/Prophet</span></div>
+          <p class="muted">Monthly forecast to support procurement and inventory planning.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Notebook</a>
+          <a href="#">PDF Report</a>
+        </div>
+      </article>
+
+      <!-- Visualization -->
+      <article class="card" data-category="viz">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5m0 14h16M8 17V9m4 8V7m4 10V12"/></svg></div>
+        <div class="body">
+          <h3>Sales KPI Dashboard — Power BI</h3>
+          <div class="tags"><span class="tag">Power BI</span><span class="tag">DAX</span></div>
+          <p class="muted">Interactive KPIs (Revenue, Margin, Top Products) with slicers by region and period.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Live Preview</a>
+          <a href="#">Case Notes</a>
+        </div>
+      </article>
+
+      <article class="card" data-category="viz">
+        <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v4H3zM3 10h18v11H3z"/></svg></div>
+        <div class="body">
+          <h3>Data Storytelling — Tableau</h3>
+          <div class="tags"><span class="tag">Tableau</span><span class="tag">Story</span></div>
+          <p class="muted">From business question to analytical insight with interactive, guided storytelling.</p>
+        </div>
+        <div class="actions">
+          <a class="primary" href="#">Preview</a>
+          <a href="#">Assets</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Certificates -->
+  <section class="container" id="certs">
+    <h2>Certificates</h2>
+    <div class="skills" role="list">
+      <div class="skill" role="listitem"><b>IBM — Excel for Data Analysis</b><br><small>2024</small></div>
+      <div class="skill" role="listitem"><b>Google — Data Analytics</b><br><small>2024</small></div>
+      <div class="skill" role="listitem"><b>Power BI — DA-100 Prep</b><br><small>2025</small></div>
+      <div class="skill" role="listitem"><b>SQL — Intermediate</b><br><small>2025</small></div>
+      <div class="skill" role="listitem"><b>Coursera / edX Projects</b><br><small>Selected</small></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="container" id="contact">
+    <h2>Contact</h2>
+    <p class="muted">Update the links below with your real profiles. The form can be wired to Formspree/Netlify later.</p>
+    <div class="contacts">
+      <!-- 🔗 PLACEHOLDERS: replace # with real URLs later -->
+      <a class="contact-link" href="#"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      <a class="contact-link" href="#"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a class="contact-link" href="#"><i class="fa-solid fa-database"></i> Kaggle</a>
+      <a class="contact-link" href="#"><i class="fa-solid fa-chart-simple"></i> Tableau Public</a>
+      <a class="contact-link" href="mailto:your.email@example.com"><i class="fa-solid fa-envelope"></i> Email</a>
+      <a class="contact-link" href="#"><i class="fa-brands fa-x-twitter"></i> X (Twitter)</a>
+    </div>
+    <form onsubmit="event.preventDefault(); alert('Hook this form to Formspree or Netlify Forms');">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" rows="5" placeholder="Your message"></textarea>
+      <button class="btn primary" type="submit">Send</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="container">© 2025 Azzam Yousif — Data Portfolio</div>
+</footer>
+
+<script>
+  // Filter logic
+  const pills = document.querySelectorAll('.pill');
+  const cards = document.querySelectorAll('.card[data-category]');
+  function setActive(btn){ pills.forEach(p=>p.classList.remove('active')); btn.classList.add('active'); }
+  function filter(cat){ cards.forEach(c=>{ c.style.display = (cat==='all'||c.dataset.category===cat) ? 'flex':'none'; }); }
+  pills.forEach(btn=> btn.addEventListener('click', ()=>{ setActive(btn); filter(btn.dataset.filter); }));
+</script>
+</body>
+</html>
